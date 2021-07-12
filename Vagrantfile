@@ -20,8 +20,7 @@ nodes = [
     :hw_req => { :cpus => 1, :memory => 1024 },
     :provisions => [
       { :type => "inline_script", :inline => $install_keepalived},
-      { :type => "file", :source => "./keepalived_config.sh", :destination => "/usr/bin/keepalived_config.sh"},
-      { :type => "shell_script", :path => "/usr/bin/keepalived_config.sh", :args => "MASTER 40 110 10.20.30.43 10.20.30.42"},
+      { :type => "shell_script", :path => "keepalived_config.sh", :args => "MASTER 40 110 10.20.30.43 10.20.30.42"},
       { :type => "inline_script", :inline => $restart_keepalived}
     ]
   },
@@ -29,8 +28,7 @@ nodes = [
     :hw_req => { :cpus => 1, :memory => 1024 },
     :provisions => [
       { :type => "inline_script", :inline => $install_keepalived},
-      { :type => "file", :source => "./keepalived_config.sh", :destination => "/usr/bin/keepalived_config.sh"},
-      { :type => "shell_script", :path => "/usr/bin/keepalived_config.sh", :args => "SLAVE 40 110 10.20.30.44 10.20.30.42"},
+      { :type => "shell_script", :path => "keepalived_config.sh", :args => "SLAVE 40 110 10.20.30.44 10.20.30.42"},
       { :type => "inline_script", :inline => $restart_keepalived}
     ]
   },
@@ -38,8 +36,7 @@ nodes = [
     :hw_req => { :cpus => 1, :memory => 1024 },
     :provisions => [
       { :type => "inline_script", :inline => $install_keepalived},
-      { :type => "file", :source => "./keepalived_config.sh", :destination => "/usr/bin/keepalived_config.sh"},
-      { :type => "shell_script", :path => "/usr/bin/keepalived_config.sh", :args => "SLAVE 40 110 10.20.30.45 10.20.30.42"},
+      { :type => "shell_script", :path => "keepalived_config.sh", :args => "SLAVE 40 110 10.20.30.45 10.20.30.42"},
       { :type => "inline_script", :inline => $restart_keepalived}
     ]
   },
