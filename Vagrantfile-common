@@ -1,0 +1,43 @@
+Vagrant.configure("2") do |config|
+  config.hostmanager.enabled = true
+  config.hostmanager.manage_guest = true
+  nodes.each do |node|
+    config.vm.define node[:hostname] do |nodeconfig|
+      nodeconfig.vm.box = node[:box]
+      if node[:box_version]
+        nodeconfig.vm.box_version = node[:box_version]
+      end
+      if node[:root_disk_size]
+        nodeconfig.disksize.size = node[:root_disk_size]
+      end
+      nodeconfig.vm.hostname = node[:hostname]
+      nodeconfig.vm.provider "virtualbox" do |v|
+        v.memory = node[:hw_req][:memory]
+        v.cpus = node[:hw_req][:cpus]
+      end
+      if node[:forward_ports]
+        node[:forward_ports].each do |pforward|
+          nodeconfig.vm.network :forwarded_port, guest: pforward[:src], host: pforward[:host]
+        end
+      end
+      if node[:network_bridge_device]
+        nodeconfig.vm.network :public_network, ip: node[:ip], bridge: node[:network_bridge_device]
+      else
+        nodeconfig.vm.network :private_network, ip: node[:ip]
+      end
+      if node[:syncf]
+        node[:syncf].each do |syncf|
+          nodeconfig.vm.synced_folder syncf[:src], syncf[:dst], owner: syncf[:owner], group: syncf[:group]
+        end
+      end
+      node[:provisions].each do |provision|
+        case provision[:type]
+        when "file"
+          nodeconfig.vm.provision "file", source: provision[:source], destination: provision[:destination]
+        when "inline_script"
+          nodeconfig.vm.provision "shell", inline: provision[:inline]
+        end
+      end
+    end
+  end
+end
