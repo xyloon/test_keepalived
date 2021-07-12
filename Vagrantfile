@@ -8,7 +8,7 @@
 
 $install_keepalived = <<-SCRIPT
   apt update
-  apt install -y keepalived net-tools
+  apt install -y keepalived net-tools nginx
 SCRIPT
 
 $restart_keepalived = <<-SCRIPT
@@ -20,7 +20,7 @@ nodes = [
     :hw_req => { :cpus => 1, :memory => 1024 },
     :provisions => [
       { :type => "inline_script", :inline => $install_keepalived},
-      { :type => "shell_script", :path => "keepalived_config.sh", :args => "MASTER 40 110 10.20.30.43 10.20.30.42"},
+      { :type => "shell_script", :path => "keepalived_config.sh", :args => "MASTER 40 110 10.20.30.43 10.20.30.42 m1"},
       { :type => "inline_script", :inline => $restart_keepalived}
     ]
   },
@@ -28,7 +28,7 @@ nodes = [
     :hw_req => { :cpus => 1, :memory => 1024 },
     :provisions => [
       { :type => "inline_script", :inline => $install_keepalived},
-      { :type => "shell_script", :path => "keepalived_config.sh", :args => "SLAVE 40 110 10.20.30.44 10.20.30.42"},
+      { :type => "shell_script", :path => "keepalived_config.sh", :args => "SLAVE 40 110 10.20.30.44 10.20.30.42 m2"},
       { :type => "inline_script", :inline => $restart_keepalived}
     ]
   },
@@ -36,7 +36,7 @@ nodes = [
     :hw_req => { :cpus => 1, :memory => 1024 },
     :provisions => [
       { :type => "inline_script", :inline => $install_keepalived},
-      { :type => "shell_script", :path => "keepalived_config.sh", :args => "SLAVE 40 110 10.20.30.45 10.20.30.42"},
+      { :type => "shell_script", :path => "keepalived_config.sh", :args => "SLAVE 40 110 10.20.30.45 10.20.30.42 m3"},
       { :type => "inline_script", :inline => $restart_keepalived}
     ]
   },
