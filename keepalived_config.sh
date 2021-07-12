@@ -18,3 +18,5 @@ echo "        $5"                    >> /etc/keepalived/keepalived.conf
 echo "    }"                         >> /etc/keepalived/keepalived.conf
 echo "    nopreempt"                 >> /etc/keepalived/keepalived.conf
 echo "}"                             >> /etc/keepalived/keepalived.conf
+
+echo "$6"                            >> /var/www/html/index.html
